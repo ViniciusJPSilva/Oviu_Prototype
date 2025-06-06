@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ovelha High-tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agro-green': '#4ade80',
+                        'agro-yellow': '#fbbf24',
+                        'agro-dark-green': '#16a34a',
+                        'agro-dark-yellow': '#f59e0b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm p-4">
+        <div class="flex items-center justify-between max-w-md mx-auto">
+            <button class="p-2">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div class="w-10 h-10 bg-agro-green rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto p-4">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="text-center mb-8">
+                <div class="w-24 h-24 bg-gradient-to-br from-agro-green to-agro-yellow rounded-full mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Ovelha High-tech</h1>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    Calcule a composição ideal da ração para seu rebanho ovino com base no ciclo de vida e características específicas do lote.
+                </p>
+            </div>
+            
+            <div class="space-y-4">
+                <button onclick="navigateToScreen('lot-info-screen')" class="w-full bg-gradient-to-r from-agro-green to-agro-dark-green text-white py-4 px-6 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                    Experimentar
+                </button>
+            </div>
+        </div>
+
+        <!-- Lot Information Screen -->
+        <div id="lot-info-screen" class="screen">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Informações do Lote</h2>
+                <p class="text-gray-600">Informe os dados básicos do seu lote</p>
+            </div>
+
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nome ou Número do Lote</label>
+                    <input type="text" id="lot-name" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agro-green focus:border-transparent" placeholder="Ex: Lote A1 ou 001">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Peso Médio (kg)</label>
+                    <input type="number" id="average-weight" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agro-green focus:border-transparent" placeholder="Ex: 45">
+                </div>
+
+                <button type="button" onclick="navigateToScreen('lifecycle-screen')" class="w-full bg-gradient-to-r from-agro-yellow to-agro-dark-yellow text-white py-4 px-6 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                    Próximo
+                </button>
+            </form>
+        </div>
+
+        <!-- Lifecycle Selection Screen -->
+        <div id="lifecycle-screen" class="screen">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Ciclo de Vida</h2>
+                <p class="text-gray-600">Selecione a fase do desenvolvimento</p>
+            </div>
+
+            <div class="space-y-4" id="lifecycle-carousel">
+                <!-- Lifecycle cards will be populated by JavaScript -->
+            </div>
+
+            <button type="button" onclick="navigateToScreen('inputs-screen')" class="w-full bg-gradient-to-r from-agro-yellow to-agro-dark-yellow text-white py-4 px-6 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 mt-6">
+                Próximo
+            </button>
+        </div>
+
+        <!-- Inputs Screen -->
+        <div id="inputs-screen" class="screen">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quantidade de Insumos</h2>
+                <p class="text-gray-600">Defina a quantidade disponível de cada insumo</p>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Milho (kg)</label>
+                    <input type="number" id="corn-amount" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agro-green focus:border-transparent" placeholder="Ex: 100">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Farelo de Soja (kg)</label>
+                    <input type="number" id="soy-amount" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agro-green focus:border-transparent" placeholder="Ex: 50">
+                </div>
+
+                <button type="button" onclick="calculateAndShowReport()" class="w-full bg-gradient-to-r from-agro-yellow to-agro-dark-yellow text-white py-4 px-6 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                    Próximo
+                </button>
+            </div>
+        </div>
+
+        <!-- Report Screen -->
+        <div id="report-screen" class="screen">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Relatório da Ração</h2>
+                <p class="text-gray-600">Composição recomendada para o lote</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="text-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800" id="report-lot-name">Lote: -</h3>
+                    <p class="text-gray-600" id="report-weight">Peso médio: - kg</p>
+                    <p class="text-gray-600" id="report-lifecycle">Fase: -</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-agro-green bg-opacity-10 rounded-lg">
+                        <span class="font-medium text-gray-800">Milho</span>
+                        <span class="font-bold text-agro-dark-green" id="corn-percentage">--%</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-agro-yellow bg-opacity-10 rounded-lg">
+                        <span class="font-medium text-gray-800">Farelo de Soja</span>
+                        <span class="font-bold text-agro-dark-yellow" id="soy-percentage">--%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="editLotInfo()" class="bg-white border-2 border-agro-green text-agro-dark-green py-3 px-4 rounded-lg font-medium text-sm hover:bg-agro-green hover:text-white transition-all duration-200">
+                        ✏️ Editar Lote
+                    </button>
+                    <button type="button" onclick="editLifecycle()" class="bg-white border-2 border-agro-yellow text-agro-dark-yellow py-3 px-4 rounded-lg font-medium text-sm hover:bg-agro-yellow hover:text-white transition-all duration-200">
+                        🐑 Editar Fase
+                    </button>
+                </div>
+                <button type="button" onclick="editInputs()" class="w-full bg-white border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition-all duration-200">
+                    📊 Editar Insumos
+                </button>
+                <button type="button" onclick="navigateToScreen('welcome-screen')" class="w-full bg-gradient-to-r from-agro-green to-agro-dark-green text-white py-4 px-6 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                    Nova Consulta
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

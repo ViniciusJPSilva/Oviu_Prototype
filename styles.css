@@ -1,0 +1,100 @@
+/* Custom styles for Ovelha High-tech app */
+
+.screen {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifecycle-card {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.lifecycle-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.lifecycle-card.selected {
+  border-color: #16a34a;
+  background-color: #f0fdf4;
+}
+
+.lifecycle-card.selected .card-border {
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+}
+
+/* Custom scrollbar for carousel */
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Input focus states */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .screen {
+    padding: 0 16px;
+  }
+}
+
+/* Estilos para botões de edição */
+.edit-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Grid responsivo para botões de edição */
+@media (max-width: 480px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-cols-2 > * {
+    width: 100%;
+  }
+}
+
+/* Animação para botões com ícones */
+button:hover svg,
+button:hover .emoji {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
