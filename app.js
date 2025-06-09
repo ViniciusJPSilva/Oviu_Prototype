@@ -26,6 +26,7 @@ const lifecycleData = [
     icon: "🐑",
     cornPercentage: 60,
     soyPercentage: 40,
+    features: ["Alto teor proteico", "Fácil digestão", "Crescimento acelerado", "Minerais essenciais"],
   },
   {
     id: "young",
@@ -34,6 +35,7 @@ const lifecycleData = [
     icon: "🐏",
     cornPercentage: 70,
     soyPercentage: 30,
+    features: ["Desenvolvimento muscular", "Transição alimentar", "Ganho de peso", "Fortalecimento ósseo"],
   },
   {
     id: "adult",
@@ -42,6 +44,7 @@ const lifecycleData = [
     icon: "🐑",
     cornPercentage: 65,
     soyPercentage: 35,
+    features: ["Manutenção corporal", "Reprodução ativa", "Produção de lã", "Energia balanceada"],
   },
   {
     id: "senior",
@@ -50,6 +53,7 @@ const lifecycleData = [
     icon: "🐏",
     cornPercentage: 55,
     soyPercentage: 45,
+    features: ["Digestão facilitada", "Cuidados especiais", "Menor atividade", "Suporte nutricional"],
   },
 ]
 
@@ -111,19 +115,26 @@ function renderLifecycleCards() {
  */
 function createLifecycleCard(lifecycle) {
   const card = document.createElement("div")
-  card.className = "lifecycle-card bg-white rounded-lg shadow-md p-6 border-2 border-gray-200"
+  card.className = "lifecycle-card"
   card.onclick = () => selectLifecycle(lifecycle.id)
 
+  const featuresHTML = lifecycle.features.map((feature) => `<li>${feature}</li>`).join("")
+
   card.innerHTML = `
-        <div class="flex items-center space-x-4">
-            <div class="text-4xl">${lifecycle.icon}</div>
-            <div class="flex-1">
-                <h3 class="text-lg font-semibold text-gray-800">${lifecycle.title}</h3>
-                <p class="text-gray-600 text-sm">${lifecycle.description}</p>
-            </div>
-            <div class="card-border w-6 h-6 rounded-full border-2 border-gray-300"></div>
-        </div>
-    `
+    <div class="card-image">
+      <div class="card-icon">${lifecycle.icon}</div>
+    </div>
+    <div class="card-content">
+      <h3 class="card-title">${lifecycle.title}</h3>
+      <p class="card-description">${lifecycle.description}</p>
+      <ul class="card-features">
+        ${featuresHTML}
+      </ul>
+      <button class="card-select-btn" onclick="event.stopPropagation(); selectLifecycle('${lifecycle.id}')">
+        Selecionar
+      </button>
+    </div>
+  `
 
   return card
 }
@@ -138,8 +149,23 @@ function selectLifecycle(lifecycleId) {
     card.classList.remove("selected")
   })
 
-  // Adiciona seleção ao card clicado
-  event.currentTarget.classList.add("selected")
+  // Encontra e seleciona o card correto
+  const cards = document.querySelectorAll(".lifecycle-card")
+  const selectedIndex = lifecycleData.findIndex((l) => l.id === lifecycleId)
+
+  if (selectedIndex !== -1 && cards[selectedIndex]) {
+    cards[selectedIndex].classList.add("selected")
+
+    // Scroll suave para centralizar o card selecionado
+    const container = document.querySelector(".carousel-container")
+    const cardWidth = 300 // 280px + 20px gap
+    const scrollPosition = selectedIndex * cardWidth
+
+    container.scrollTo({
+      left: scrollPosition,
+      behavior: "smooth",
+    })
+  }
 
   // Salva no estado
   appState.selectedLifecycle = lifecycleData.find((l) => l.id === lifecycleId)
